@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
+	tele "github.com/anaxita/telebot"
 	"github.com/stretchr/testify/assert"
-	tele "gopkg.in/telebot.v3"
 )
 
 func TestLayout(t *testing.T) {
@@ -22,13 +22,15 @@ func TestLayout(t *testing.T) {
 	assert.Equal(t, "html", pref.ParseMode)
 	assert.Equal(t, &tele.LongPoller{}, pref.Poller)
 
-	assert.ElementsMatch(t, []tele.Command{{
-		Text:        "start",
-		Description: "Start the bot",
-	}, {
-		Text:        "help",
-		Description: "How to use the bot",
-	}}, lt.Commands())
+	assert.ElementsMatch(t, []tele.Command{
+		{
+			Text:        "start",
+			Description: "Start the bot",
+		}, {
+			Text:        "help",
+			Description: "How to use the bot",
+		},
+	}, lt.Commands())
 
 	assert.Equal(t, "string", lt.String("str"))
 	assert.Equal(t, 123, lt.Int("num"))
@@ -84,22 +86,26 @@ func TestLayout(t *testing.T) {
 	}, lt.MarkupLocale("en", "reply_extended"))
 
 	assert.Equal(t, &tele.ReplyMarkup{
-		InlineKeyboard: [][]tele.InlineButton{{
+		InlineKeyboard: [][]tele.InlineButton{
 			{
-				Unique: "stop",
-				Text:   "Stop",
-				Data:   "1",
+				{
+					Unique: "stop",
+					Text:   "Stop",
+					Data:   "1",
+				},
 			},
-		}},
+		},
 	}, lt.MarkupLocale("en", "inline", 1))
 
 	assert.Equal(t, &tele.ReplyMarkup{
-		InlineKeyboard: [][]tele.InlineButton{{
+		InlineKeyboard: [][]tele.InlineButton{
 			{
-				Text:   "This is a web app",
-				WebApp: &tele.WebApp{URL: "https://google.com"},
+				{
+					Text:   "This is a web app",
+					WebApp: &tele.WebApp{URL: "https://google.com"},
+				},
 			},
-		}},
+		},
 	}, lt.MarkupLocale("en", "web_app"))
 
 	assert.Equal(t, &tele.ArticleResult{
